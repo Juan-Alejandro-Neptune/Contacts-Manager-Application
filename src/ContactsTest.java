@@ -3,7 +3,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.*;
 import java.io.IOException;
 
@@ -11,7 +10,7 @@ public class ContactsTest {
 
         public static String[] MainMenu = {"View Contacts.", "Add a new contact.", "Search a contact by name.", "Delete an existing contact.","Exit"};
         public static Input input = new Input();
-        private static List<String> currentList = new ArrayList<>();
+        private static ArrayList<String> currentList = new ArrayList<>();
         private static final Path contacTxt = Paths.get("src/contact/contacts.txt");
 
 
@@ -83,10 +82,15 @@ public class ContactsTest {
 
         switch (userInput) {
             case "1" -> {
+                try{
+                currentList = (ArrayList<String>) Files.readAllLines(contacTxt);
+            } catch (IOException ioe){
+                ioe.printStackTrace();
+            }
                 for (String line: currentList) {
                     System.out.println(line);
                 }
-                main();
+                returnMenu();
             }
             case "2" -> {
                 addToContacts();
@@ -96,7 +100,6 @@ public class ContactsTest {
             case "4" ->System.out.println("Thank you for your time. Goodbye!") ;
             case "5" -> {
                 System.out.println("Thank you for your time. Goodbye!");
-                main();
             }
             default -> {
                 System.out.println("That is not a valid option...");
