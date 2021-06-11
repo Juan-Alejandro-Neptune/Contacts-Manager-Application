@@ -8,7 +8,7 @@ public class Input {
         }
 
         public String getString() {
-            return getString("Input a sentence");
+            return getString("Enter Contacts Name");
         }
         public String getString(String prompt){
             System.out.println(prompt);
@@ -28,7 +28,7 @@ public class Input {
             }
         }
         public int getInt(){
-            System.out.println("Enter a number");
+            System.out.println("Enter Contacts Phone Number");
             return this.scanner.nextInt();
         }
         public int getInt (int min, int max) {

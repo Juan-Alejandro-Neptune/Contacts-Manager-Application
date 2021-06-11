@@ -1,8 +1,8 @@
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.*;
 import java.io.IOException;
@@ -11,6 +11,8 @@ public class ContactsTest {
 
         public static String[] MainMenu = {"View Contacts.", "Add a new contact.", "Search a contact by name.", "Delete an existing contact.","Exit"};
         public static Input input = new Input();
+        private static List<String> currentList = new ArrayList<>();
+        private static final Path contacTxt = Paths.get("src/contact/contacts.txt");
 
 
     public static void createPath() {
@@ -37,13 +39,33 @@ public class ContactsTest {
         }
     }
 
-    public static void createContact() {
-
+    public static String createContact() {
+        Input input = new Input();
+        String userContactName = input.getString();
+        int userContactNum = input.getInt();
+        currentList.add(userContactName + " | " + userContactNum);
+        return "\n" + userContactName + " | " + userContactNum;
     }
 
+    public static void addToContacts() {
+        try {
+            Files.writeString(contacTxt, createContact(), StandardOpenOption.APPEND);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main() {
         System.out.println("Would you like to look at the contact menu?");
+        if(input.yesNo()){
+            mainMenu();
+        }else{
+            System.out.println("Thank you come again!");
+        }
+    }
+
+    public static void returnMenu() {
+        System.out.println("Would you like to return to the contact menu?");
         if(input.yesNo()){
             mainMenu();
         }else{
@@ -60,19 +82,16 @@ public class ContactsTest {
         String userInput = scanner.next();
 
         switch (userInput) {
-            case "1" -> {Path namePath = Paths.get("src/contact", "contacts.txt");
-                List<String> currentList = new ArrayList<>();
-                try {
-                    currentList = Files.readAllLines(namePath);
-                } catch (IOException ioe){
-                    ioe.printStackTrace();
-                }
+            case "1" -> {
                 for (String line: currentList) {
                     System.out.println(line);
                 }
                 main();
             }
-            case "2" ->System.out.println("Thank you for your time. Goodbye!") ;
+            case "2" -> {
+                addToContacts();
+                returnMenu();
+            }
             case "3" ->System.out.println("Thank you for your time. Goodbye!") ;
             case "4" ->System.out.println("Thank you for your time. Goodbye!") ;
             case "5" -> {
