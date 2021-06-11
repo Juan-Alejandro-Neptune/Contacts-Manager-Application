@@ -39,23 +39,4 @@ public class Contacts {
             return false;
         }
     }
-
-
-
-
-//    public static void main(String[] args) {
-//        Scanner scanner = new Scanner(System.in);
-//        Contacts person = new Contacts();
-//        System.out.println("What is your first name?");
-//        String userInput = scanner.next();
-//        person.setFirstname(userInput);
-//        System.out.println("What is your last name?");
-//        userInput = scanner.next();
-//        person.setLastName(userInput);
-//        System.out.println("What is your phone number?");
-//        String userInput2 = String.valueOf(scanner.nextInt());
-//        person.setFirstname(userInput2);
-//
-//
-//    }
 }
