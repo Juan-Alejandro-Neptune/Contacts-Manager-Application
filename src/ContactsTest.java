@@ -5,12 +5,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.*;
 import java.io.IOException;
+import java.io.FileWriter;
 
 public class ContactsTest {
 
         public static String[] MainMenu = {"View Contacts.", "Add a new contact.", "Search a contact by name.", "Delete an existing contact.","Exit"};
         public static Input input = new Input();
-        private static ArrayList<String> currentList = new ArrayList<>();
+        private static List<String> currentList = new ArrayList<>();
         private static final Path contacTxt = Paths.get("src/contact/contacts.txt");
 
 
@@ -72,6 +73,49 @@ public class ContactsTest {
         }
     }
 
+    public static void searchContact(){
+        Scanner userSearch = new Scanner(System.in);
+        System.out.println("Please search contact name or number:");
+        String search = userSearch.next();
+        try {
+            currentList = Files.readAllLines(contacTxt);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (String s : currentList) {
+            if(s.toLowerCase().contains(search.toLowerCase())){
+                System.out.println("Contact:\n" + s);
+            }
+        }
+
+    }
+
+    public static void deleteContact(){
+        Scanner userSearch = new Scanner(System.in);
+        String Blank = " ";
+        System.out.println("Please search contact name or number:");
+        String search = userSearch.next();
+        try {
+            currentList = Files.readAllLines(contacTxt);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Contact:\n");
+        for (String s : currentList) {
+
+            if(s.toLowerCase().contains(search.toLowerCase())){
+//                String name = s;
+//                System.out.println(name);
+//                name = " ";
+//                System.out.println(name);
+                currentList.remove(s);
+            }
+
+        }
+
+
+    }
+
     public static void mainMenu(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter an option (1, 2, 3, 4 or 5):");
@@ -83,7 +127,7 @@ public class ContactsTest {
         switch (userInput) {
             case "1" -> {
                 try{
-                currentList = (ArrayList<String>) Files.readAllLines(contacTxt);
+                currentList = Files.readAllLines(contacTxt);
             } catch (IOException ioe){
                 ioe.printStackTrace();
             }
@@ -96,8 +140,15 @@ public class ContactsTest {
                 addToContacts();
                 returnMenu();
             }
-            case "3" ->System.out.println("Thank you for your time. Goodbye!") ;
-            case "4" ->System.out.println("Thank you for your time. Goodbye!") ;
+            case "3" ->{
+                searchContact();
+                returnMenu();
+            }
+            case "4" ->{
+                deleteContact();
+                returnMenu();
+
+            }
             case "5" -> {
                 System.out.println("Thank you for your time. Goodbye!");
             }
